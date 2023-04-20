@@ -1,6 +1,7 @@
 ﻿using bytebank.Titular;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,13 +37,16 @@ namespace bytebank.Contas
         public void Depositar(double valor)
         {
             saldo += valor;
+            GravarOperacaoBrancaria("Depositou", (valor.ToString() + "\n" + "Saldo Atual: " + this.saldo));
         }
 
         public bool Sacar(double valor)
         {
+            
             if (valor <= saldo)
             {
                 saldo -= valor;
+                GravarOperacaoBrancaria("Retirada", ("Retirada de " + valor + " para Conta:" + this.Conta) + "\n" + "Saldo atual: " + saldo);
                 return true;
             }
             else
@@ -59,10 +63,12 @@ namespace bytebank.Contas
             }
             else
             {
-                Sacar(valor);
-                destino.Depositar(valor);                
-                GravarOperacaoBrancaria "Enviar", ("Tranferencia de " + valor + " Conta:" + this.Conta));
-                GravarOperacaoBrancaria(destino, "Receber", "Recebeu de" + (this.Conta + ' ' + valor));
+
+                Sacar(valor);        
+                
+                destino.Depositar(valor);
+                
+                
                 return true;
             }
         }
@@ -103,6 +109,7 @@ namespace bytebank.Contas
                 throw new ArgumentException("Agencia nao possui codigo indentificado", nameof(numero_conta));
             }
 
+            GravarOperacaoBrancaria("Iniciou a Conta", ("Saldo Atual: " + this.saldo));
 
             //try
             //{
@@ -119,7 +126,7 @@ namespace bytebank.Contas
             TotalDeContasCriadas++;
         }
 
-        public void GravarOperacaoBrancaria(ContaCorrente,string operacao,string observacao)
+        public void GravarOperacaoBrancaria(string operacao,string observacao)
         {
             DateTime currentDateTime = DateTime.Now;
             var OperacaoBrancaria = new ExtratoBrancario(currentDateTime, operacao, observacao);
@@ -129,15 +136,15 @@ namespace bytebank.Contas
 
         public void MostrarExtratoBrancario()
         {
-            Console.WriteLine("Extato Brancario");
+            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine("----------------Extato Brancario-----------------");
             foreach (ExtratoBrancario extrato in extrato)
             {
-                Console.WriteLine("---------------------------------------------\n");
-                Console.WriteLine("Data......" + extrato.DataMotivacao + '\n');
-                Console.WriteLine("---------------------------------------------");
-                Console.WriteLine("Operacao.." + extrato.descricao     + '\n');
-                Console.WriteLine("---------------------------------------------\n");
-                Console.WriteLine("Observação" + extrato.observacao);
+                Console.WriteLine("-------------------------------------------------\n");
+                Console.WriteLine("Operacao..: " + extrato.descricao     + '\n');                
+                Console.WriteLine("Data......: " + extrato.DataMotivacao + '\n');                
+                Console.WriteLine("Observação: " + extrato.observacao    + '\n');
+                
             }
 
             Console.WriteLine("---------------------------------------------");

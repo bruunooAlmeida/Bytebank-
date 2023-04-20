@@ -11,12 +11,16 @@ try
     
     ContaCorrente conta2 = new ContaCorrente(284, "1234-Y");
     
-    ContaCorrente conta3 = new ContaCorrente(285, "1111");
+    ContaCorrente conta3 = new ContaCorrente(285, "1111-x");
 
     conta1.Sacar(50);
-    
+    conta2.Sacar(100);
 
-    Console.WriteLine(ContaCorrente.TaxaOperacao);
+    conta1.Depositar(2500);
+
+    conta1.MostrarExtratoBrancario();
+
+    //Console.WriteLine(ContaCorrente.TaxaOperacao);
 }
 catch(ArgumentException e) 
 {

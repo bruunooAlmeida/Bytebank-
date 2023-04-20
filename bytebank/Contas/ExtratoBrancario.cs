@@ -19,11 +19,11 @@ namespace bytebank.Contas
 
         }
 
-        public ExtratoBrancario(DateTime data, string descicao, string obs)
+        public ExtratoBrancario(DateTime data, string descricao, string obs)
         {
             this.DataMotivacao = data;
-            this.descricao = descricao;
-            this.observacao = obs;
+            this.descricao     = descricao;
+            this.observacao    = obs;
         }
         
 
