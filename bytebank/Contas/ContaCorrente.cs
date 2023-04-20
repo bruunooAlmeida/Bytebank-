@@ -85,8 +85,19 @@ namespace bytebank.Contas
             this.Conta = numero_conta;
             if(numero_agencia <= 0)
             {
-                throw new ArgumentException("Numero da conta nao pode ser 0");
+                throw new ArgumentException("Numero da conta nao pode ser 0", nameof(numero_agencia));
             }
+
+            if(numero_conta == null)
+            {
+                throw new ArgumentException("Codigo da agencia nao pode ser vazio", nameof(numero_conta));
+            }
+
+            if (! numero_conta.Contains('-'))
+            {
+                throw new ArgumentException("Agencia nao possui codigo indentificado", nameof(numero_conta));
+            }
+
 
             //try
             //{
@@ -99,7 +110,7 @@ namespace bytebank.Contas
             //}
             //finally { }
 
-            
+
             TotalDeContasCriadas++;
         }
     }

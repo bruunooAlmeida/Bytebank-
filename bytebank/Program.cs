@@ -4,19 +4,19 @@ using bytebank.Titular;
 
 try
 {
+    
+    ContaCorrente conta5 = new ContaCorrente(283, "1234-X");
+    
+    ContaCorrente conta6 = new ContaCorrente(284, "1234-Y");
+    
+    ContaCorrente conta7 = new ContaCorrente(285, "1111");
+
     Console.WriteLine(ContaCorrente.TaxaOperacao);
-    ContaCorrente conta5 = new ContaCorrente(0, "1234-X");
-    Console.WriteLine(ContaCorrente.TotalDeContasCriadas);
-
-    ContaCorrente conta6 = new ContaCorrente(284, "9874-Z");
-    Console.WriteLine(ContaCorrente.TotalDeContasCriadas);
-
-    ContaCorrente conta7 = new ContaCorrente(285, "1111-Z");
-    Console.WriteLine(ContaCorrente.TotalDeContasCriadas);
 }
 catch(ArgumentException e) 
 {
-    Console.WriteLine( e.Message );
+    Console.WriteLine("Parametro com Erro " + e.ParamName);    
+    Console.WriteLine(e.Message);
 }
 
 
