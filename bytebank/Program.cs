@@ -1,15 +1,20 @@
-﻿using bytebank.Contas;
+﻿using bytebank.Auxiliar;
+using bytebank.Contas;
 using bytebank.Titular;
+
 
 
 try
 {
     
-    ContaCorrente conta5 = new ContaCorrente(283, "1234-X");
+    ContaCorrente conta1 = new ContaCorrente(283, "1234-X");
     
-    ContaCorrente conta6 = new ContaCorrente(284, "1234-Y");
+    ContaCorrente conta2 = new ContaCorrente(284, "1234-Y");
     
-    ContaCorrente conta7 = new ContaCorrente(285, "1111");
+    ContaCorrente conta3 = new ContaCorrente(285, "1111");
+
+    conta1.Sacar(50);
+    
 
     Console.WriteLine(ContaCorrente.TaxaOperacao);
 }

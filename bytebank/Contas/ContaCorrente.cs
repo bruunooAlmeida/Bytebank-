@@ -12,6 +12,9 @@ namespace bytebank.Contas
         public static int TotalDeContasCriadas { get; private set; }
         public static int TaxaOperacao;
         private int numero_agencia;
+        
+        private List<ExtratoBrancario> extrato = new List<ExtratoBrancario>();
+
         public int Numero_agencia
         {
             get { return this.numero_agencia; }
@@ -57,7 +60,9 @@ namespace bytebank.Contas
             else
             {
                 Sacar(valor);
-                destino.Depositar(valor);
+                destino.Depositar(valor);                
+                GravarOperacaoBrancaria "Enviar", ("Tranferencia de " + valor + " Conta:" + this.Conta));
+                GravarOperacaoBrancaria(destino, "Receber", "Recebeu de" + (this.Conta + ' ' + valor));
                 return true;
             }
         }
@@ -112,6 +117,30 @@ namespace bytebank.Contas
 
 
             TotalDeContasCriadas++;
+        }
+
+        public void GravarOperacaoBrancaria(ContaCorrente,string operacao,string observacao)
+        {
+            DateTime currentDateTime = DateTime.Now;
+            var OperacaoBrancaria = new ExtratoBrancario(currentDateTime, operacao, observacao);
+            
+            extrato.Add(OperacaoBrancaria);
+        }
+
+        public void MostrarExtratoBrancario()
+        {
+            Console.WriteLine("Extato Brancario");
+            foreach (ExtratoBrancario extrato in extrato)
+            {
+                Console.WriteLine("---------------------------------------------\n");
+                Console.WriteLine("Data......" + extrato.DataMotivacao + '\n');
+                Console.WriteLine("---------------------------------------------");
+                Console.WriteLine("Operacao.." + extrato.descricao     + '\n');
+                Console.WriteLine("---------------------------------------------\n");
+                Console.WriteLine("Observação" + extrato.observacao);
+            }
+
+            Console.WriteLine("---------------------------------------------");
         }
     }
 }
