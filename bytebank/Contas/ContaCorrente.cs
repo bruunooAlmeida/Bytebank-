@@ -83,8 +83,24 @@ namespace bytebank.Contas
         {
             this.Numero_agencia = numero_agencia;
             this.Conta = numero_conta;
+            if(numero_agencia <= 0)
+            {
+                throw new ArgumentException("Numero da conta nao pode ser 0");
+            }
+
+            //try
+            //{
+            //    TaxaOperacao = 30 / TotalDeContasCriadas;
+
+            //}
+            //catch (DivideByZeroException) 
+            //{
+            //    Console.WriteLine("Ocorreu um erro! não é permitido uma divisão por Zero");
+            //}
+            //finally { }
+
+            
             TotalDeContasCriadas++;
-            TaxaOperacao = 30 / TotalDeContasCriadas;
         }
     }
 }
