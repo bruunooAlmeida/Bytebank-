@@ -15,8 +15,7 @@ namespace ByteBank
         {
             Arquivo = arquivo;
 
-            // throw new FileNotFoundException();
-
+            throw new FileNotFoundException();
             Console.WriteLine("Abrindo arquivo: " + arquivo);
         }
 

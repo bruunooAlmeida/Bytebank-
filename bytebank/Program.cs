@@ -1,11 +1,22 @@
 ﻿using bytebank.Contas;
 using bytebank.Titular;
 using ByteBank;
+using System.Numerics;
 
+try
+{
 LeitorDeArquivo leitor =new LeitorDeArquivo("contas.txt");
 leitor.LerProximaLinha();
 leitor.LerProximaLinha();
-leitor.Fechar();
+
+}
+catch (IOException)
+{
+    Console.WriteLine("Leitura do Arquivo Interrompida");
+}finally
+{
+    leitor.Fechar();
+}
 
 //try
 //{   
