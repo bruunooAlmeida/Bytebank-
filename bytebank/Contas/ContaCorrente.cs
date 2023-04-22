@@ -12,27 +12,46 @@ namespace bytebank.Contas
     {
         public static int TotalDeContasCriadas { get; private set; }
         public static int TaxaOperacao;
-        private int numero_agencia;
+        
         
         private List<ExtratoBrancario> extrato = new List<ExtratoBrancario>();
-
-        public int Numero_agencia
-        {
-            get { return this.numero_agencia; }
-            private set {
-                    if (value > 0)
-                    {
-                        this.numero_agencia = value;
-                    }
-                }
-        }
-
+        
+        public int Numero_agencia{ get; set; }
        
         public string Conta { get; set; }
 
         private double saldo = 100;
 
         public Cliente Titular { get; set; }
+
+        public int ContadorSaquesNaoPermitidos { get; set; }
+        
+        public int ContadorTransferenciasNaoPermitidas { get; private set; }
+
+        public ContaCorrente(int numero_agencia, string numero_conta)
+        {
+            this.Numero_agencia = numero_agencia;
+            this.Conta = numero_conta;
+            if (numero_agencia <= 0)
+            {
+                throw new ArgumentException("Numero da conta nao pode ser 0", nameof(numero_agencia));
+            }
+
+            if (numero_conta == null)
+            {
+                throw new ArgumentException("Codigo da agencia nao pode ser vazio", nameof(numero_conta));
+            }
+
+            if (!numero_conta.Contains('-'))
+            {
+                throw new ArgumentException("Agencia nao possui codigo indentificado", nameof(numero_conta));
+            }
+
+            GravarOperacaoBrancaria("Iniciou a Conta", ("Saldo Atual: " + this.saldo));
+
+            TotalDeContasCriadas++;
+        }
+
 
         public void Depositar(double valor)
         {
@@ -51,29 +70,28 @@ namespace bytebank.Contas
             }
             else
             {
-                return false;
+                ContadorSaquesNaoPermitidos++;
+                throw new SaldoInsuficienteException("Saldo insuficiente para Operação");
             }
         }
 
         public bool Transferir(double valor, ContaCorrente destino)
         {
-            if (saldo < valor)
-            {
-                return false;
-            }
-            else
+            try
             {
 
-                Sacar(valor);        
-                
-                destino.Depositar(valor);
-                
-                
-                return true;
-            }
+                Sacar(valor);
+                ContadorTransferenciasNaoPermitidas++;
+            }catch(SaldoInsuficienteException e)
+            {
+                throw new OperacaoFinanceiraException("Operação não realizada.", e);
+            }                
+             destino.Depositar(valor);
+               return true;
+            
         }
 
-        public void SetSaldo(double valor)
+        private void SetSaldo(double valor)
         {
             if(valor < 0)
             {
@@ -89,41 +107,10 @@ namespace bytebank.Contas
         {
             return this.saldo;
         }
-
-        public ContaCorrente(int numero_agencia, string numero_conta)
+       
+        public void mostrarSaldoConta()
         {
-            this.Numero_agencia = numero_agencia;
-            this.Conta = numero_conta;
-            if(numero_agencia <= 0)
-            {
-                throw new ArgumentException("Numero da conta nao pode ser 0", nameof(numero_agencia));
-            }
-
-            if(numero_conta == null)
-            {
-                throw new ArgumentException("Codigo da agencia nao pode ser vazio", nameof(numero_conta));
-            }
-
-            if (! numero_conta.Contains('-'))
-            {
-                throw new ArgumentException("Agencia nao possui codigo indentificado", nameof(numero_conta));
-            }
-
-            GravarOperacaoBrancaria("Iniciou a Conta", ("Saldo Atual: " + this.saldo));
-
-            //try
-            //{
-            //    TaxaOperacao = 30 / TotalDeContasCriadas;
-
-            //}
-            //catch (DivideByZeroException) 
-            //{
-            //    Console.WriteLine("Ocorreu um erro! não é permitido uma divisão por Zero");
-            //}
-            //finally { }
-
-
-            TotalDeContasCriadas++;
+            Console.WriteLine(GetSaldo());
         }
 
         public void GravarOperacaoBrancaria(string operacao,string observacao)
