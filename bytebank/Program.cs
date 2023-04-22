@@ -1,71 +1,96 @@
 ﻿using bytebank.Contas;
-using bytebank.Titular;
-using ByteBank;
 using System.Numerics;
 
-try
-{
-LeitorDeArquivo leitor =new LeitorDeArquivo("contas.txt");
-leitor.LerProximaLinha();
-leitor.LerProximaLinha();
 
+Console.WriteLine("Boas Vindas ao ByteBank, Atendimento.");
+Array amostra = Array.CreateInstance(typeof(double), 5);
+amostra.SetValue(5.9, 0);
+amostra.SetValue(1.8, 1);
+amostra.SetValue(7.1, 2);
+amostra.SetValue(10, 3);
+amostra.SetValue(6.9, 4);
+
+double[] valores = { 10.5, 4.6, 7.9, 22.43 };
+
+void TestaPosicaoArray()
+{
+    int[] valores = { 10, 58, 36, 47 };
+    for (int i = 0; i < 5; i++)
+    {
+        Console.WriteLine(valores[i]);
+    }
 }
-catch (IOException)
+
+Console.WriteLine(calcularMedia(valores));
+
+double calcularMedia(double[] amostras)
 {
-    Console.WriteLine("Leitura do Arquivo Interrompida");
-}finally
-{
-    leitor.Fechar();
+    double total = 0;
+
+    foreach (double elemento in amostras)
+    {
+        Console.WriteLine(elemento);
+        total += elemento;
+    }
+
+    return total;
 }
 
 //try
-//{   
-//    ContaCorrente conta1 = new ContaCorrente(283, "1234-X");   
-//    ContaCorrente conta2 = new ContaCorrente(284, "1234-Y");
-//    ContaCorrente conta3 = new ContaCorrente(285, "1111-x");
-
-//    conta1.Sacar(50);
-//    conta2.Depositar(80);
-//    //conta1.mostrarSaldoConta();
-//    //conta1.Sacar(110);
-//    conta1.MostrarExtratoBrancario();
-//    //conta2.Sacar(100);
-
-//    //    conta1.Depositar(2500);
-//    conta1.Sacar(10000);
-//    //Console.WriteLine(ContaCorrente.TaxaOperacao);
-//}
-//catch(ArgumentException e) 
 //{
-//    Console.WriteLine("Parametro com Erro " + e.ParamName);    
-//    Console.WriteLine(e.Message);
+//    TestaPosicaoArray();
 //}
-//catch (OperacaoFinanceiraException e)
+//catch(IndexOutOfRangeException e)
 //{
-//    Console.WriteLine(e.Message);
 //    Console.WriteLine(e.StackTrace);
-//    Console.WriteLine("Operação não pode ser concluida. Saldo Insuficente");
 //    Console.WriteLine(e.Message);
 //}
 
+void TestaMediana(Array array)
+{
+    if ((array == null) || (array.Length == 0))
+    {
+        Console.WriteLine("Array para cálculo da mediana está vazio ou nulo.");
+    }
 
+    double[] numerosOrdenados = (double[])array.Clone();
+    Array.Sort(numerosOrdenados);
+    //[1,8][5,9][6,9][7,1][10]
 
-//try
-//{
-//    ContaCorrente conta1 = new ContaCorrente(4564, "789684-x");
-//    ContaCorrente conta2 = new ContaCorrente(7891, "456794-y");
+    int tamanho = numerosOrdenados.Length;
+    int meio = tamanho / 2;
+    double mediana = (tamanho % 2 != 0) ? numerosOrdenados[meio] :
+                     (numerosOrdenados[meio] + numerosOrdenados[meio - 1]) / 2;
+    Console.WriteLine($"Com base na amostra a mediana = {mediana}");
+}
 
-//    // conta1.Transferir(10000, conta2);
-//    conta1.Sacar(10000);
-//}
-//catch (OperacaoFinanceiraException e)
-//{
-//    Console.WriteLine(e.Message);
-//    Console.WriteLine(e.StackTrace);
+//TestaMediana(amostra);
 
-//    Console.WriteLine("Informações da INNER EXCEPTION (exceção interna):");
+//TestaBuscarPalavra();
+void TestaBuscarPalavra()
+{
+    string[] arrayDePalavras = new string[5];
 
-//    Console.WriteLine(e.InnerException.Message);
-//    Console.WriteLine(e.InnerException.StackTrace);
-//}
+    for (int i = 0; i < arrayDePalavras.Length; i++)
+    {
+        Console.Write($"Digite {i + 1}ª Palavra: ");
+        arrayDePalavras[i] = Console.ReadLine();
+    }
 
+    Console.Write("Digite palavra a ser encontrada: ");
+    var busca = Console.ReadLine();
+
+    foreach (string palavra in arrayDePalavras)
+    {
+        if (palavra.Equals(busca))
+        {
+            Console.WriteLine($"Palavra encontrada = {busca}.");
+            break;
+        }
+    }
+}
+
+void TestaArrayContasCorrentes()
+{
+
+}

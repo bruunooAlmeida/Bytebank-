@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bytebank
+namespace bytebank.Conta
 {
     public class SaldoInsuficienteException : Exception
     {
-        public SaldoInsuficienteException(string mensagem): base (mensagem) { }
+        public SaldoInsuficienteException(string mensagem) : base(mensagem) { }
     }
 }

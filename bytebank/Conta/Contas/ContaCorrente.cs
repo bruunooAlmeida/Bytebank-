@@ -1,4 +1,5 @@
-﻿using bytebank.Titular;
+﻿using bytebank.Conta;
+using bytebank.Conta.Titular;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
