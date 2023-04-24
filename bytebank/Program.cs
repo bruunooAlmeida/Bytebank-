@@ -1,4 +1,5 @@
 ﻿using bytebank.Contas;
+using bytebank.Util;
 using System.Numerics;
 
 
@@ -90,7 +91,12 @@ void TestaBuscarPalavra()
     }
 }
 
+TestaArrayContasCorrentes();
+
 void TestaArrayContasCorrentes()
 {
-
+    ListaDeContasCorrentes listaDeContas = new ListaDeContasCorrentes();
+    listaDeContas.Adicionar(new ContaCorrente(874, "6565656-A"));
+    listaDeContas.Adicionar(new ContaCorrente(874, "6455454-B"));
+    listaDeContas.Adicionar(new ContaCorrente(874, "6454456-C"));        
 }
