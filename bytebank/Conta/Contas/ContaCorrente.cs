@@ -21,7 +21,7 @@ namespace bytebank.Contas
        
         public string Conta { get; set; }
 
-        private double saldo = 100;
+        public double Saldo { get; set; }
 
         public Cliente Titular { get; set; }
 
@@ -33,6 +33,7 @@ namespace bytebank.Contas
         {
             this.Numero_agencia = numero_agencia;
             this.Conta = numero_conta;
+            this.Saldo = 100;
             if (numero_agencia <= 0)
             {
                 throw new ArgumentException("Numero da conta nao pode ser 0", nameof(numero_agencia));
@@ -48,7 +49,7 @@ namespace bytebank.Contas
                 throw new ArgumentException("Agencia nao possui codigo indentificado", nameof(numero_conta));
             }
 
-            GravarOperacaoBrancaria("Iniciou a Conta", ("Saldo Atual: " + this.saldo));
+            GravarOperacaoBrancaria("Iniciou a Conta", ("Saldo Atual: " + this.Saldo));
 
             TotalDeContasCriadas++;
         }
@@ -56,17 +57,17 @@ namespace bytebank.Contas
 
         public void Depositar(double valor)
         {
-            saldo += valor;
-            GravarOperacaoBrancaria("Depositou", (valor.ToString() + "\n" + "Saldo Atual: " + this.saldo));
+            this.Saldo += valor;
+            GravarOperacaoBrancaria("Depositou", (valor.ToString() + "\n" + "Saldo Atual: " + this.Saldo));
         }
 
         public bool Sacar(double valor)
         {
             
-            if (valor <= saldo)
+            if (valor <= this.Saldo)
             {
-                saldo -= valor;
-                GravarOperacaoBrancaria("Retirada", ("Retirada de " + valor + " para Conta:" + this.Conta) + "\n" + "Saldo atual: " + saldo);
+                this.Saldo -= valor;
+                GravarOperacaoBrancaria("Retirada", ("Retirada de " + valor + " para Conta:" + this.Conta) + "\n" + "Saldo atual: " + this.Saldo);
                 return true;
             }
             else
@@ -100,13 +101,13 @@ namespace bytebank.Contas
             }
             else
             {
-                this.saldo = valor;
+                this.Saldo = valor;
             }
         }
 
         public double GetSaldo()
         {
-            return this.saldo;
+            return this.Saldo;
         }
        
         public void mostrarSaldoConta()
