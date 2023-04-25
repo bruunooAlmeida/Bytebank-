@@ -29,6 +29,7 @@ namespace bytebank.Contas
         
         public int ContadorTransferenciasNaoPermitidas { get; private set; }
 
+
         public ContaCorrente(int numero_agencia, string numero_conta)
         {
             this.Numero_agencia = numero_agencia;
@@ -56,6 +57,7 @@ namespace bytebank.Contas
             TotalDeContasCriadas++;
         }
 
+        public ContaCorrente(int numero_agencia, string numero_conta, string nome, string cpf) : this
 
         public void Depositar(double valor)
         {
@@ -69,7 +71,7 @@ namespace bytebank.Contas
             if (valor <= this.Saldo)
             {
                 this.Saldo -= valor;
-                GravarOperacaoBrancaria("Retirada", ("Retirada de " + valor + " para Conta:" + this.Conta) + "\n" + "Saldo atual: " + this.Saldo);
+                GravarOperacaoBrancaria( ("Retirada"), ("Retirada de " + valor + " para Conta:" + this.Conta) + "\n" + "Saldo atual: " + this.Saldo);
                 return true;
             }
             else

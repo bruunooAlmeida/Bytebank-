@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace bytebank.Conta
 {
-    public class OperacaoFinanceiraException : Exception
+    public class OperacaoFinanceiraException :  System.Exception
     {
 
         public OperacaoFinanceiraException() { }
 
         public OperacaoFinanceiraException(string mensagem) : base(mensagem) { }
 
-        public OperacaoFinanceiraException(string mensagem, Exception excecaoInterna) : base(mensagem, excecaoInterna) { }
+        public OperacaoFinanceiraException(string mensagem, System.Exception excecaoInterna) : base(mensagem, excecaoInterna) { }
     }
 
 
