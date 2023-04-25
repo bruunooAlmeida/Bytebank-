@@ -34,6 +34,8 @@ namespace bytebank.Contas
             this.Numero_agencia = numero_agencia;
             this.Conta = numero_conta;
             this.Saldo = 100;
+            Titular = new Cliente();
+
             if (numero_agencia <= 0)
             {
                 throw new ArgumentException("Numero da conta nao pode ser 0", nameof(numero_agencia));
@@ -89,8 +91,7 @@ namespace bytebank.Contas
                 throw new OperacaoFinanceiraException("Operação não realizada.", e);
             }                
              destino.Depositar(valor);
-               return true;
-            
+               return true;            
         }
 
         private void SetSaldo(double valor)

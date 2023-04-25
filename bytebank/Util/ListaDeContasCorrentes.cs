@@ -24,6 +24,33 @@ namespace bytebank.Util
             _proximaPosicao++;
         }
 
+        public void Remover(ContaCorrente item)
+        {
+            Console.WriteLine("Adicionando Elementos");
+            foreach (var itens in _itens)
+            {
+                if (itens.Equals(item)){
+                    _itens = null;
+                    _proximaPosicao--; 
+                }
+            }
+            _itens[_proximaPosicao] = item;
+            _proximaPosicao++;
+        }
+
+        public void ExibeLista()
+        {
+            for (int i = 0; i < _itens.Length; i++)
+            {
+                if (_itens[i] != null)
+                {
+                    var conta = _itens[i];
+                    Console.WriteLine($" Indice[{i}] = Conta:{conta.Conta} - N° da Agência: {conta.Numero_agencia}");
+                }
+            }
+        }
+
+
         public ContaCorrente MaiorSaldo()
         {
 
