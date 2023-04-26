@@ -11,9 +11,15 @@ Console.WriteLine("Boas Vindas ao ByteBank, Atendimento.");
 
 //ArrayList _listaDeContas = new ArrayList();
 List<ContaCorrente> _listaDeContas = new List<ContaCorrente>(){
-  new ContaCorrente(94, "123456-A"),
+  new ContaCorrente(100, "123456-G"),
+  new ContaCorrente(101, "951258-H"),
+  new ContaCorrente(102, "987321-I"),
+  new ContaCorrente(96, "123456-A"),
   new ContaCorrente(95, "951258-B"),
-  new ContaCorrente(96, "987321-C")
+  new ContaCorrente(96, "987321-C"),
+  new ContaCorrente(97, "123456-D"),
+  new ContaCorrente(98, "951258-E"),
+  new ContaCorrente(99, "987321-F")
 };
 
 List<ContaCorrente> _listaDeContas2 = new List<ContaCorrente>(){
@@ -197,6 +203,12 @@ void AtendimentoCliente()
                 case '3':
                     RemoverConta();
                     break;
+                case '4':
+                    OrdenarConta();
+                    break;
+                case '5':
+                    PesquisarContas();
+                    break;
                 case '6':
 
                     break;
@@ -208,6 +220,85 @@ void AtendimentoCliente()
     }catch (ByteBankException e)
     {
         Console.WriteLine($"{e.Message}");
+    }
+}
+
+void PesquisarContas()
+{
+    Console.Clear();
+    Console.WriteLine("===============================");
+    Console.WriteLine("===    PESQUISAR CONTAS     ===");
+    Console.WriteLine("===============================");
+    Console.WriteLine("\n");
+    Console.Write("Deseja pesquisar por (1) NUMERO DA CONTA ou (2)CPF TITULAR ? ");
+    switch (int.Parse(Console.ReadLine()))
+    {
+        case 1:
+            {
+                Console.Write("Informe o número da Conta: ");
+                string _numeroConta = Console.ReadLine();
+                ContaCorrente consultaConta = ConsultaPorNumeroConta(_numeroConta);
+                Console.WriteLine(consultaConta.ToString());
+                Console.ReadKey();
+                break;
+            }
+        case 2:
+            {
+                Console.Write("Informe o CPF do Titular: ");
+                string _cpf = Console.ReadLine();
+                ContaCorrente consultaCpf = ConsultaPorCPFTitular(_cpf);
+                Console.WriteLine(consultaCpf.ToString());
+                Console.ReadKey();
+                break;
+            }
+        default:
+            Console.WriteLine("Opção não implementada.");
+            break;
+    }
+
+}
+
+ContaCorrente ConsultaPorCPFTitular(string? cpf)
+{
+    ContaCorrente conta = null;
+    for (int i = 0; i < _listaDeContas.Count; i++)
+    {
+        if (_listaDeContas[i].Titular.Cpf.Equals(cpf))
+        {
+            conta = _listaDeContas[i];
+        }
+    }
+    return conta;
+}
+
+ContaCorrente ConsultaPorNumeroConta(string? numeroConta)
+{
+    ContaCorrente conta = null;
+    for (int i = 0; i < _listaDeContas.Count; i++)
+    {
+        if (_listaDeContas[i].Conta.Equals(numeroConta))
+        {
+            conta = _listaDeContas[i];
+        }
+    }
+
+    return conta;
+}
+
+
+void OrdenarConta()
+{
+    foreach (var item in _listaDeContas)
+    {
+        Console.WriteLine(item.Numero_agencia);
+    }
+    Console.ReadKey();
+
+    _listaDeContas.Sort();
+    
+    foreach (var item in _listaDeContas)
+    {
+        Console.WriteLine(item.Numero_agencia);
     }
 }
 

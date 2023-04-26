@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace bytebank.Contas
 {
-    public class ContaCorrente
+    public class ContaCorrente: IComparable<ContaCorrente>
     {
         public static int TotalDeContasCriadas { get; private set; }
         public static int TaxaOperacao;
@@ -57,7 +57,32 @@ namespace bytebank.Contas
             TotalDeContasCriadas++;
         }
 
-        public ContaCorrente(int numero_agencia, string numero_conta, string nome, string cpf) : this
+        public ContaCorrente(int numero_agencia, string numero_conta, string nome, string cpf) : this(numero_agencia, numero_conta)
+        {
+            this.Numero_agencia = numero_agencia;
+            this.Conta = numero_conta;
+            this.Saldo = 100;
+            Titular = new Cliente();
+
+            if (numero_agencia <= 0)
+            {
+                throw new ArgumentException("Numero da conta nao pode ser 0", nameof(numero_agencia));
+            }
+
+            if (numero_conta == null)
+            {
+                throw new ArgumentException("Codigo da agencia nao pode ser vazio", nameof(numero_conta));
+            }
+
+            if (!numero_conta.Contains('-'))
+            {
+                throw new ArgumentException("Agencia nao possui codigo indentificado", nameof(numero_conta));
+            }
+
+            GravarOperacaoBrancaria("Iniciou a Conta", ("Saldo Atual: " + this.Saldo));
+
+            TotalDeContasCriadas++;
+        }
 
         public void Depositar(double valor)
         {
@@ -141,5 +166,31 @@ namespace bytebank.Contas
 
             Console.WriteLine("---------------------------------------------");
         }
+
+        public int CompareTo(ContaCorrente? outro)
+        {
+            if(outro == null)
+            {
+                return 1;
+
+            }
+            else
+            {
+                return this.Numero_agencia.CompareTo(outro.Numero_agencia);
+            }
+        }
+
+        public override string ToString()
+        {
+
+            return $" === DADOS DA CONTA === \n" +
+                   $"Número da Conta : {this.Conta} \n" +
+                   $"Saldo da Conta: {this.Saldo} \n" +
+                   $"Titular da Conta: {this.Titular.Nome} \n" +
+                   $"CPF do Titular  : {this.Titular.Cpf} \n" +
+                   $"Profissão do Titular: {this.Titular.Profissao}";
+        }
+
+
     }
 }
